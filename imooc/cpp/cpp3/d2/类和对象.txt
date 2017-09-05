@@ -1,0 +1,98 @@
+#c++类和对象
+>>>主角：
+类：代表是抽象派，玩的是概念
+对象：真实、具体；
+>>>配角:数据成员和成员函数  //它们构成了精彩和完整的类
+       构造函数和析构函数  //描述了对象的生生死死
+       对象复制和对象赋值  //使类的定义充满艺术
+       对象数组和对象指针  //将应用形态发挥的淋漓尽致
+       this指针           //像影子一样，贯穿与这部大戏的始终，却后少崭露头角，他的加入使类和对象有机结合，更是为封装篇画龙点睛。
+
+1.类的定义：
+class Dog        //关键字class，类名Dog
+{
+   char name[20];//数据成员，也称属性
+   int age;
+   int type;
+
+   void speak(); //成员函数，也可以叫方法
+   void run();
+};
+---->想一想：抽象出来的是否是狗的全部信息？
+结论：目的不同抽象出的信息不同,选择性的暴露———————————<关键>
+--->怎么能选择性的暴露？
+访问限定符：public:公共的
+           protected:受保护的
+           private:私有的
+so--->
+class TV
+{
+public:
+     char name[20];
+     int type;
+
+     void changeVol();
+     void power();
+     //以上是希望暴露的就写成public
+     //以下是希望隐藏的就写成private
+private:
+     电阻调节
+     像素配色   
+};
+
+#对象的实例化，有两种方式：1->从栈实例化
+                          2->从堆实例化
+1.从栈实例化对象//从栈中实例化就是普通的定义对象
+例：class TV              int main()
+   {                     {
+    public:                  TV tv;     //定义一个对象
+       char name[20];        TV tv[20]; //定义一个对象数组
+       int type;                        //这就是从栈中实例化对象
+                             return 0;
+       void changeVol();  }
+       void power();
+   };
+
+2.从堆实例化对象//从堆中实例化就是定义指针
+class TV             int main()
+{                    {
+public:                 TV *p=new TV();//申请出来的这块内存未来就可以作为TV的对象    
+   char name[20];       TV *q=new TV[20];
+   int type;            //to do
+                        delete p;
+                        delete []q;
+   void changeVol();    return 0;
+   void power();      }
+};
+
+*一定要通过访问对象的各种成员来达到目的。
+
+3.对象成员的访问
+如果从栈中定义了一个对象:            如果从堆中定义一个对象：
+int main()                          int main()
+{                                   {  
+   TV tv;                              TV *p=new TV();
+   tv.type=0;//访问成员变量             p->type=0;
+   tv.changeVol();//访问成员函数        p->changeVol();
+   return 0;                           delete p;
+                                        p=NULL;
+                                       return 0;
+                                     }
+}
+
+3.1从堆中定义对象数组，然后访问
+int main()
+{
+   TV *p=new TV[5];
+   for(int i=0;i<5;i++)
+   {
+       p[i]->type=0;
+       p[i]->changeVol();
+   }
+   delete []p;
+   p=NULL;
+   return 0;
+}
+
+
+

@@ -1,0 +1,56 @@
+#对象成员
+以一个线段为例，这是没有参数的
+class Coordinate//点的定义
+{
+public:
+   Coordinate();
+private:
+   int m_iX;
+   int m_iY;
+};
+class Line//线段的定义
+{
+public:
+   Line();
+private:
+   Coordinate m_coorA;//起点
+   Coordinate m_coorB;//终点
+};
+int main()
+{
+   //当实例化Line这样一个对象时到底是先实例化线段还是先实例化作为对象成员的坐标对象呢？
+   Line *p=new Line();
+   delete p;//销毁时的顺序是什么？先构造的后销毁
+   p=NULL;
+   return 0;
+}
+
+这是有参数的
+class Coordinate
+{
+public:
+   Coordinate(int x,int y);
+private:
+   int m_iX;
+   int m_iY;
+};
+class Line
+{
+public:
+   Line(int x1,int y1,int x2,int y2);
+private:
+   Coordinate m_coorA;
+   Coordinate m_coorB;
+};
+Line::Line(int x1,int y1,int x2,int y2):m_coorA(x1,y1),m_coorB(x2,y2)//初始化列表
+{
+   cout<<"Line"<<endl;
+}
+int main()
+{
+   Line *p=new Line(2,1,6,4);
+   
+   delete p;
+   p= NULL;
+   return 0;
+}

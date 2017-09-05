@@ -1,0 +1,43 @@
+#c++语言--const
+1.const控制变量是否变化
+2.const与基本数据类型
+int x=3;       //变量
+        变量名      存储地址    存储内容
+           x           &x          3
+const int x=3;//由变量变为常量
+         变量名      存储地址    存储内容
+           x           &x          3   //注意这里的内容不可变
+
+3.const与指针类型
+const int *p = NULL;int const *p = NULL;二者是等价的；
+int *const p = NULL;//与前两者是有区别的
+
+const int *const p = NULL;与int const *const p = NULL;//是完全等价的。
+
+3.1 int x=3;   const int *p = &x;
+//执行p=&y;指向另外一个地址是正确的，因为const是修饰的*p;但是如果执行*p=4;就是错误的；
+     变量名       存储地址     存储内容
+       x              &x          3
+       p              &p          &x
+
+3.2 int x=3; int *const p=&x; //执行p=&y;将是错误的
+      变量名          存储地址         存储内容
+        x                &x               3
+        p                &p               &x  //这里指向x就不能在动了。
+
+3.3 const int x=3; const int *const p=&x;
+    //p = &y; *p=4;都是错误的
+          变量名          存储地址       存储内容
+            x               &x              3  //3不可以变
+            p               &p              &x //这里指向x就不能在动了
+
+4.const 与引用
+int x=3; const int &y=x;
+//x=10;是正确的   //y=20;是错误的，只能通过x来修改，不能通过y修改
+变量名         存储地址     存储内容
+  x              &x           3
+
+
+
+
+

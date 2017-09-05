@@ -1,0 +1,53 @@
+#数据的封装
+class Student
+{
+public:
+   string name;
+   int age;
+   ......
+}
+int main()
+{
+  Student stu;
+  stu.name="Jim";
+  stu.age=10;
+  return 0;
+}
+//但是这样的写法有错误，违背了面向对象的指导思想
+
+1.面向对象的基本思想
+以对象为中心，就是要以谁做什么来表达程序的逻辑，体现到代码就是将所有数据操作转化为成员函数的调用；换句话说对象在程序中的所有行为都通过调用自己的函数来完成。那么如何通过函数来封装数据成员？
+class Student
+{
+public:
+   void setAge(int _age){age= _age;}//设置年龄的值
+   int getAge(){return age;}        //读取年龄的值
+private:
+   string name;
+   int age;
+    ...
+};
+
+1.1封装的好处
+class Student                 void setAge(int _age)
+{                             {
+public:                           if(_age>0&&_age<100)
+    void setAge(int _age)         {
+    {age= _age;}                      age= _age;
+    int getAge(){return age;}     }
+private:                          else
+    string name;                  {
+    int age;                         ....
+    ......                        }
+};                              }
+
+1.2让它只能读不能写
+class Car
+{
+public:
+   int getWheelCount(){return m_iWheelCount;}
+   
+private:
+   int m_iWheelCount;//这个值就只能读而不能通过外界改变
+};
+

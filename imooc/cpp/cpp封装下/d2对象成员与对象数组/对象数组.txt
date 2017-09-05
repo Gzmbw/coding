@@ -1,0 +1,30 @@
+#对象数组
+1.只有实例化对象，才能去实现数据成员和数据成员函数。但是一个对象往往不够，需要一组对象。
+
+2.例如
+class Coordinate
+{
+public:
+   int m_iX;
+   int m_iY;
+};
+//为了操作上的方便，使用Public限定符来对它修饰，这样就不用写所谓的set函数和get函数
+int main()
+{
+   Coordinate coord[3];//在栈上实例化一个对象数组
+   coord[1].m_iX=10;//访问第二个元素，用.号接它们的数据成员
+   Coordinate *p=new Coordinate[3];//在堆中实例化一个对象数组
+   p[0].m_iY=20;//或者p->m_iY=20;
+   delete []=p;
+   p=NULL;
+   return 0;
+}
+**Coordinate coord[3];   Coordinate *p=new Coordinate[3]
+ coord[0] 这里面有两个数据变量 p---->      p[0]
+              all
+ coord[1]                     p+1--->     p[1]
+
+ coord[2]                      p+2--->     p[2]
+  栈区                         堆区
+
+

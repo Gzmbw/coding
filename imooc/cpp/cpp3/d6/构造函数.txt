@@ -1,0 +1,76 @@
+问题：实例化的对象是如何在内存中存储的？类中的代码又是如何存储的？
+代码和数据又有什么关系？
+
+*内存分区：
+1.栈区：int x=0;int *p=NULL;
+特点：内存由系统控制，无论是分配还是回收，都不需要程序员关心
+2.堆区：int *p=new int[20];
+特点：未来必须使用delete回收，需要程序员自己去关心。
+3.全局区：存储全局变量及静态变量
+4.常量区：string str="hello";
+5.代码区：存储逻辑代码的二进制
+举个栗子：对象数据是如何存储的
+实例化之前是不会占内存的。   实例化,这时候每个对象都会在栈中开辟一个内存，用来存储各自的数据，但是它们是不同的变量，占居不同的内存。逻辑代码只编译了一份放在类代码区，供所有对象的使用，谁需要就调用它，找到相应的代码入口，就可以执行相应的程序。
+class Car               car1 wheelCount       代码区
+{                       car2 wheelCount ————>getWheelCount
+private:                car3 wheelCount
+   int wheelCount;
+public:
+   int getWheelCount();
+   {return wheelCount;}
+};
+当我们实例化三个对象之后，每个对象的数据都是不可控的，因为我们没有对这些数据进行初始化。要给对象初始化。
+
+#对象初始化
+class Tank                 int main(void)
+{                          {
+private:                       Tank t1;//实例化一个坦克对象
+  int m_iPosX;//横坐标          t1.init();
+  int m_iPosY;//纵坐标          Tank t2;//实例化另一个对象
+public:                         t2.init();
+  void init()//初始化            return 0;
+  {m_iPosX=0;m_iPosY=0;}    }
+};
+1.对象初始化：
+有且仅有一次；
+根据条件初始化；
+思考：初始化函数如何避免误操作：忘记调用了初始化函数，重复调用了初始化函数。
+
+#构造函数的规则和特点
+1.构造函数在对象实例化时被自动调用，我们通常将初始化的代码写在构造函数内，就能够起到初始化数据的作用。
+2.构造函数与类同名
+3.构造函数没有返回值
+4.构造函数可以有多个重载形式，要遵循重载的规则条件是在相同作用域内：用同一函数名定义的多个函数；参数个数和参数类型不同。这样多个函数彼此互称为重载。
+5.实例化对象时仅用到一个构造函数：即便有多个对象，也用一个构造函数。
+6.当用户没有定义构造函数时，编译器自动生成一个构造函数，这个构造函数没有做任何事情。
+
+#构造函数的定义
+1.无参构造函数
+class Student
+{
+public:
+   Student(){m_strName="jim";}//构造函数没有参数，构造函数名称与类名相同，没有任何返回值(也没有void).
+private:
+   string m_strName;
+};
+
+2.有参构造函数
+class Student
+{
+public:
+   Student(string name)//这就是有参数构造函数
+   {m_strName=name;}
+private:
+   string m_strName;
+};
+
+3.重载构造函数
+class Student
+{
+public:
+   Student(){m_strName="jim";}
+   Student(string name)//这里重载，只需要遵循重载的规则就OK
+   {m_strName=name;}//注意参数的个数、类型、顺序不同；
+private:
+   string m_strName;
+};

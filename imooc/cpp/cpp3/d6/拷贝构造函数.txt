@@ -1,0 +1,39 @@
+1.考贝构造函数
+class Student
+{
+public:
+   Student()
+   {cout<<"Student";}
+private:
+   string m_strName;
+};
+int main()
+{ 
+   Student stu1;//实例化stu1这样的对象
+   Student stu2=stu1;//实例化stu2对象，并把stu1赋值给stu2，
+   Student stu3(stu1);//这种也是把stu1赋值给stu3，
+ 
+   return 0;
+}
+结果：为什么只输出一次？在执行后两个时，调用的是拷贝构造函数。
+
+2.拷贝构造函数
+定义格式：类名(const 类名&变量名)
+class Student
+{
+public:
+   Student(){m_strName="jim";}
+   Student(const Student &stu){}//这里就是拷贝构造函数，名称上和普通构造函数一样，但在参数设计上不一样。其次在这里面传入的是一个引用，与自己数据类型完全相同的引用。
+private:
+   string m_strName;
+};
+
+2.1如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数。
+2.2当采用直接初始化或复制初始化实例化对象时系统自动调用拷贝构造函数。
+
+3.构造函数总结
+构造函数分为无参构造函数和有参构造函数；无参构造函数->默认构造函数；有参构造函数分为参数带默认值和参数无默认值。
+
+3.1系统自动生成的函数
+3.11普通构造函数
+3.12拷贝构造函数

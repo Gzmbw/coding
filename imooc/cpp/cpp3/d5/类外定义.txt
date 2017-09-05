@@ -1,0 +1,46 @@
+//关于内联函数，关键字inline;
+inline void fun()
+{ 
+   cout<<"hello"<<endl;
+}
+内联函数与普通函数的区别：内联函数编译时将函数体代码和实参代替函数调用语句。
+
+1.类内定义与内联函数
+例如：函数体都在类里面定义，类内定义的成员函数都默认为inline
+class Student
+{
+public:
+        void setAge(int _age){age=_age}
+        int getAge(){return age;}
+        void study(){//todo}
+private:
+        string name;
+        int age;
+};
+
+2.类外定义：
+2.1同文件类外定义：指成员函数虽然定义在类的外面，其定义与类的定义在同一个文件当中。
+比如:在car.cpp
+class car
+{
+public:
+   void run();
+   void stop();
+   void changeSpeed();
+};
+void car::run(){}
+void car::stop(){}
+void car::changespeed(){}
+2.2分文件类外定义
+比如：先定义头文件car.h文件名和类名最好写成一样的
+car.h                        car.cpp
+class car                  #include"car.h"
+{                          void car::run()
+public:                    {}
+   void run();             void car::stop()
+   void stop();            {}
+   void changespeed();     void car::changespeed()
+};                         {}
+
+
+

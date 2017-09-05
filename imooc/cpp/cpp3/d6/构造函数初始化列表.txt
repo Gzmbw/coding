@@ -1,0 +1,34 @@
+1.默认构造函数？比如
+int main(void)                 class Student
+{                             {
+  //实例化两个对象             public:
+  Student stu1();//从栈调用       Student(){}//或者Student(string name="jim")
+  Student *p=NULL;//从堆中调用 private:
+  p=new Student();                string m_strName;
+                               };
+  return 0;
+}
+
+2.构造函数初始化列表
+class Student
+{
+public:
+   Student():m_strName("jim"),m_iAge(10){}//这里是无参构造函数，这就是初始化列表，注意列表的形式，有一个冒号，写要初始化的成员变量，赋值不用等号要用括号
+private:
+   string m_strName;
+   int m_iAge;
+};
+2.1初始化列表特性：
+-->初始化列表先于构造函数执行：编译器会先给初始化列表数据成员赋值，在执行构造函数的代码。
+-->初始化列表只能用于构造函数。
+-->初始化列表可以同时初始化多个数据成员。
+2.2初始化列表存在的必要性
+class Circle
+{
+public:
+   Circle(){m_dPi=3.14}//通过构造函数初始化pi写成这样是错的，只能通过初始化列表完成
+   Circle():m_dPi(3.14){}
+private:
+   const double m_dPi;//pi是不变的，用const修饰
+};
+

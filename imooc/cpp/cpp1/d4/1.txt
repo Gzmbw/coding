@@ -1,0 +1,15 @@
+c++基本知识：
+1.新的数据类型：bool型。
+2.初始化方法比较
+c++提供两种初始化方法：复制初始化 int x=1024;
+                      直接初始化 int x(1024);有好处，速度加快。
+3.随用随定义
+4.namespace 命名空间，怎么定义命名空间
+namespace A     |     namespace B
+{               |     {
+  int x=0;      |        int x=2;
+  void f1();    |        void f1();
+  void f2();    |        void f3();
+}               |     }
+cout<<A::x<<endl;//访问到A中的x
+B::f1();//B中的f1
