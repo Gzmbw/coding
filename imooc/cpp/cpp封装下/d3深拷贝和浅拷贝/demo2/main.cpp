@@ -14,5 +14,7 @@ int main()
     //arr1.setCount(5);
     Array arr2=arr1;
     //cout<<"arr2.m_iCount="<<arr2.getCount()<<endl;
+    arr1.printArr();
+    arr2.printArr();
     return 0;
 }
