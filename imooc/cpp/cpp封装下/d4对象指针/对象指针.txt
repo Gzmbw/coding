@@ -1,0 +1,25 @@
+#对象指针
+class Coordinate
+{
+public:
+  int m_iX;
+  int m_iY;
+};
+1.从堆中实例化
+Coordinate *p=new Coordinate;
+//对象指针*p指向这个对象，通过new实例化这个对象之后，这个对象就会执行它的构造函数。
+//作为指针p与这个对象在内存当中的相关位置以及它们的对应关系。
+       p --->          <-------p->m_iX    
+                m_iX
+                m_iY  
+(*p).m_iY--->          <-------p->m_iY
+                堆区
+int main()
+{
+   Coordinate *p=new Coordinate;
+   p->m_iX =10;//(*p).m_iX=10;
+   p->m_iY =20;//(*p).m_iY=20;
+   delete p;
+   p=NULL;
+   return 0;
+}
