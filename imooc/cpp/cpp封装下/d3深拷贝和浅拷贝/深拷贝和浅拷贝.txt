@@ -1,0 +1,57 @@
+#深拷贝和浅拷贝
+class Array
+{
+public:
+   Arry(){m_iCount=5;}
+   Arry(const Array &arr)//拷贝构造函数
+   {m_iCount=arr.m_iCount;}
+private:
+   int m_iCount;
+};
+int main()
+{
+   Array arr1;
+   Array arr2=arr1;
+   return 0;
+}
+再比如：
+clss Array
+{
+public:
+   Array(){m_iCount=5;m_pArr=new int[m_iCount];}//直接在构造函数，从堆中申请内存
+   Array(const Array& arr)
+   {  m_iCount = arr.m_iCount;
+      m_pArr = arr.m_pArr;
+   }
+private:
+   int m_iCount;
+   int *m_pArr;
+};
+int main()
+{
+   Array arr1;
+   Array arr2=arr1;//这里是有问题的，这里arr2和arr1的m_pArr都指向了同一块内存，这时如果先给arr1的m_pArr赋值，然后在给arr2的m_pArr去赋值，这段内存将会被重写，覆盖掉之前的值；最严重的是当销毁arr1的m_pArr所指向的内存，如果释放掉这段内存，然后对于arr2的m_pArr也进行销毁，那么相当于同一块内存释放了两次，那么这就是问题，计算机会以崩溃的形式抗议。
+   return 0;
+}
+这两个例子只是将数据成员的值进行简单的拷贝，把这种拷贝的模式叫浅拷贝。
+
+***所以我们希望拷贝构造函数所完成的工作是：两个对象的指针所指向的是不同的内存，拷贝的时候不是简单的将地址拷贝过来，而是将指针所指向的内存当中的每一个元素依次的拷贝过来。应给把代码写成这样：
+class Array
+{
+public:
+   Array(){m_iCount=5;m_pArr=new int[m_iCount];}
+   Array(const Array &arr)
+   {
+      m_iCount=arr.m_iCount;
+      m_pArr=new int[m_iCount];//分配了一段内存
+      for(int i=0;i<m_iCount;i++)//对每一个元素进行拷贝
+      { 
+         m_pArr[i]=arr.m_pArr[i];
+       }
+     }
+private:
+   int m_iCount;
+   int *m_pArr;
+};
+深拷贝：当进行对象拷贝时，不是简单的做值的拷贝，而是将堆中内存的数据也进行拷贝。
+
