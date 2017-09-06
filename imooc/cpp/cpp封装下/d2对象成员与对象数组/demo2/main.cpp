@@ -14,8 +14,10 @@ using namespace std;
  */
 int main()
 {
-    Line *p=new Line();
+    Line *p=new Line(1,2,3,4);
+    p->printInfo();
     delete p;
     p=NULL;
     return 0;
 }
+//从结论可看出先构造的后销毁，后构造的先销毁

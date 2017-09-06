@@ -2,7 +2,7 @@
 class Coordinate
 {
 public:
-    Coordinate();
+    Coordinate(int x,int y);
     ~Coordinate();
     void setX(int x);
     int getX();

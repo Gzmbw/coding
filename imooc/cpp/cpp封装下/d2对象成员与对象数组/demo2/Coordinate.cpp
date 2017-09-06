@@ -2,13 +2,15 @@
 #include"Coordinate.h"
 using namespace std;
 
-Coordinate::Coordinate()
+Coordinate::Coordinate(int x,int y)//为了在创建线段时就把点确定下来
 {
-    cout<<"Coordinate()"<<endl;
+    m_iX=x;
+    m_iY=y;
+    cout<<"Coordinate()"<<m_iX<<","<<m_iY<<endl;
 }
 Coordinate::~Coordinate()
 {
-    cout<<"~Coordinate()"<<endl;
+    cout<<"~Coordinate()"<<m_iX<<","<<m_iY<<endl;
 }
 void Coordinate::setX(int x)
 {

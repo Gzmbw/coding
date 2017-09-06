@@ -1,7 +1,7 @@
 #include<iostream>
 #include"Line.h"
 using namespace std;
-Line::Line()
+Line::Line(int x1,int y1,int x2,int y2):m_coorA(x1,y1),m_coorB(x2,y2)//通过实例化列表来初始化成员
 {
     cout<<"Line"<<endl;
 }
