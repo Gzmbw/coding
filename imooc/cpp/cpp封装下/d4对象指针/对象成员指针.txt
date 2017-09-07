@@ -1,0 +1,42 @@
+#对象成员指针：对象的指针作为另一个类的数据成员、
+class Coordinate//坐标类
+{
+public:
+   Coordinate(int x,int y);
+private:
+   int m_iX;
+   int m_iY;
+};
+
+class Line 
+{
+public:
+   Line();
+   ~Line();
+private:
+   Coordinate m_coorA;//现在变成：Coordinate *m_pCoorA;
+   Coordinate m_coorB;//          Coordinate *m_pCoorB;
+};
+//初始化列表
+Line::Line():m_pCoorA(NULL),m_pCoorB(NULL)
+{
+}
+//也可以进行普通初始化
+Line::Line()
+{
+   m_pCoorA=NULL;
+   m_pCoorB=NULL;
+}
+//更多是这种情况,因为这是两个指针，指针要指向某一个对象，才能进行操作
+Line:::Line()
+{
+   m_pCoorA=new Coordinate(1,3);
+   m_pCoorB=new Coordinate(5,6);
+}
+int main()
+{
+  Line line();
+  cout<<sizeof(line)<<endl;
+  return 0;
+}
+

@@ -1,0 +1,59 @@
+#this指针
+class Array
+{
+public:
+   Array(int _len){len=_len;}
+   int getLen(){return len;}
+   void setLen(int _len){len=_len;}
+private:
+    int len;
+};
+发现：数据成员与参数表达的意思一样，但是名字不同。
+如果参数与数据成员同名会怎么样？
+class Array
+{
+public:
+   Array(int len){len=len;}//×数据名与参数名相同，计算机识别不了到底是谁传给谁，所以这里是错的。
+   int getLen(){return len;}
+   void setLen(int len){len=len;}//×
+private:
+   int len;
+};
+this 就是指向对象数据的指针
+Array arr1     this   <-----> &arr1
+Array arr2     this   <-----> &arr2
+
+arr1   <-----this------>  arr2
+len                       len
+XXX                       XXX
+XXX                       XXX
+*通过this指针可以访问它表达的对象的自身的任何数据
+class Array
+{
+public:
+   Array(int len){this->len=len;}//通过this->len来表达数据成员的len;
+   int getLen(){return len;}
+   void setLen(int len){this->len=len;}
+private:
+   int len;
+};
+
+*成员函数如何访问到对应的数据成员？
+class Array
+{
+public:
+   Array(T *this,int _len){this->len=_len;}
+   int getLen(T *this){return this->len;}
+   void setLen(T *this,int _len){this->len=_len;}
+private:
+   int len;
+};
+int main()
+{
+   Array arr1(this,10); ——>len=10——>this->len=10
+   arr1.getLen(this);——>return len——>return this->len
+   Array arr2(this,20); ——> len=20 ——> this->len=20
+   arr2.setLen(this,30); ——> len=30 ——> this->len=30
+   return 0;
+
+
