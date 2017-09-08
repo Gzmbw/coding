@@ -1,0 +1,40 @@
+1.例子：
+class Coordinate
+{
+public:
+   Coordinate(int x,int y);
+private:
+   const int m_iX;
+   const int m_iY;
+};
+Coordinate::Coordinate(int x,int y):m_iX(x),m_iY(y)//由于使用了const修饰，所以只能用初始化列表
+{
+
+}
+2.常成员函数
+class Coordinate
+{
+public:
+   Coordinate(int x,int y);
+   void changeX() const;//常成员函数
+   void changex();
+   //这里互为重载
+private:
+   int m_iX;
+   int m_iY;
+};
+void Coordinate::changeX() const
+{
+    m_iX=10;//这里是错误的，那常成员函数中为什么不能改变数据成员的值？
+}
+void Coordinate::changeX()
+{
+    m_iX=10;
+}
+//如何调用常成员函数
+int main()
+{
+   const Coordinate coordinate(3,5);//这里先定义常对象
+   coordinate.changeX();//这里就调用是常成员函数
+   return 0;
+}
