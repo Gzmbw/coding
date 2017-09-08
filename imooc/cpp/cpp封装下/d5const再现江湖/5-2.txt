@@ -1,0 +1,58 @@
+#对象指针与对象引用
+class Coordinate
+{
+public:
+   Coordinate(int x,int y);
+   int getX();
+   int getY();
+   void printInfo() const;//常成员函数
+private:
+   int m_iX;
+   int m_iY;
+};
+int Coordinate::getX()
+{return m_iX;}
+ 
+int Coordinate::getY()
+{return m_iY;}
+
+void Coordinate::printInfo() const
+{
+   cout<<"("<<m_iX<<","<<m_iY<<")"<<endl;
+}
+int main()
+{
+   Coordinate coor1(3,5);
+   Coordinate &coor2=coor1;//对象引用
+   Coordinate *pCoor=&coor1;//对象指针
+   
+   coor1.printInfo();
+   coor2.printInfo();
+   pCoor->printInfo();
+
+   return 0;
+}
+
+#对象的常指针与常引用
+int main()
+{
+   Coordinate coor1(3,5);
+   const Coordinate &coor2=coor1;
+   const Coordinate *pCoor=&coor1;
+   coor1.printInfo();
+   coor2.getX();//这是错的，常引用具有只读权限，coor2.printInfo();由于printInfo后面加了const
+   pCoor->getX();//这也是错的，常指针具有只读权限,pCoor.printInfo();
+   return 0;
+}
+
+#例子
+int main()
+{
+  Coordinate coor1(3,5);
+  Coordinate coor2(7,9);
+  Coordinate *const pCoor=&coor1;//这里pCoor具有读写权限，只是指向了coor1就不能指向其它对象
+  pCoor->getY();//正确，要求读写权限
+  pCoor = coor2;//这是错的，指向了coor2对象
+  pCoor->printInfo();//正确，因为printInfo是一个常成员函数，要求读写权限
+  return 0;
+}
