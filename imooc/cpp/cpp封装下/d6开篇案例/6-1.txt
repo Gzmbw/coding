@@ -1,0 +1,25 @@
+1.算法：左手规则或者右手规则，基本原则：保证手始终触墙。
+2.架构描述
+迷宫类(MazeMap)
+   数据成员             成员函数
+        墙壁字符            构造函数
+        通路字符            数据封装函数
+        迷宫数组            迷宫回执函数
+                            迷宫边界检查函数
+人类(MazePerson)
+   数据成员              成员函数
+       人的字符              构造函数
+       人的朝向              数据封装函数
+       人当前位置            向不同方向前进的函数
+       人前一个位置          转弯函数
+       人的速度              开始函数
+
+动画控制
+void MazePerson::gotoxy(int x,int y)//定位，坐标
+{
+   COORD cd;
+   cd.X=x;
+   cd.Y=y;
+   HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+   SetConsoleCursorPosition(handle,cd);
+};
