@@ -1,0 +1,25 @@
+1.为什么继承？
+一个人的类            一个工人的类
+class Person          class Worker
+{                     {
+public:               public:
+   void eat();            void eat();
+   string m_strName;      void work();
+   int m_iAge;            string m_strName;
+};                        int m_iAge;
+                          int m_iSalary;
+                       };
+作为工人比人类有更多的属性，也有相同的属性，可以继承，条件：工人是人的子集；
+class Worker:public Person//在继承了人类后，在类定义中就不需要写人类的所有内容，只写自己特有的内容
+{
+public:
+    void work();
+    int m_iSalary;
+};
+//工人类就是人类的派生类，人类就是工人的基类；也可以工人称为子类，人类称为父类；
+
+2.内存中的对象
+Person           Worker
+m_strName        m_strName
+m_iAge           m_iAge
+                 m_iSalary
