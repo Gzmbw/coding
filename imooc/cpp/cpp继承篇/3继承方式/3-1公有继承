@@ -1,0 +1,70 @@
+1.继承方式
+
+1.1公有继承 class A:public B
+1.2保护继承 class A:protected B
+1.3私有继承 class A:private B
+
+2.公有继承
+class Person          class Worker:public Person
+{                     {
+public:               public:
+   void eat();            void eat();//可以不写
+   string m_strName;      void work();
+   int m_iAge;            string m_strName;//可以不写
+};                        int m_iAge;//可以不写
+                          int m_iSalary;
+                       };
+int main()
+{
+   Worker worker;
+   worker.m_strName="Merry";
+   worker.eat();
+   return 0;
+};
+
+3.保护型   
+class Person           int main()
+{                      {
+public:                     Person person;
+   void eat();              person.eat();
+protected:                  person.m_iAge=20;//错误
+   int m_iAge;              person.m_strName="jim";//错误，由于年龄和名字不在public下面，计算机就会禁止访问
+private:                    return 0;
+   string m_strName;
+};
+void Person::eat()
+{
+   m_strName="jim";//这里是可以访问的
+   m_iAge=10;
+}
+
+例如：
+class Person              class Worker:public Person
+{                         {
+public:                   public:
+   void eat();                void eat();
+protected:                    void work(){m_iAge=20;}//可以访问名字和年龄
+   string m_strName;      protected:
+   int m_iAge;                 string m_strName;
+};                             int m_iAge; 
+                               int m_iSalary;
+                            };
+
+4.private型
+class Person            class Worker:public Person
+{                       {
+public:                  public:
+   void eat();               void eat();
+private:                     void work(){m_iAge=20;}//是错的
+    string m_strName;    private:
+    int m_iAge;               int m_iSalary;
+};                        };
+
+
+总结：
+基类成员访问属性            继承方式          派生类成员访问属性
+private成员                                       无法访问
+protected成员函数           public                 protected
+public成员                                         public
+
+
