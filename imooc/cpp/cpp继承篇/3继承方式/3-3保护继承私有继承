@@ -1,0 +1,30 @@
+1.保护继承
+基类成员访问属性            继承方式        派生类成员访问属性
+   private成员                                  无法访问
+   protected成员            protected           protected
+   public成员                                   protected
+
+2.私有继承
+
+基类成员访问属性              继承方式        派生类成员访问属性
+   private成员                                   无法访问
+   protected成员               private           private
+   public成员                                    private
+
+例子：
+class Line
+{
+public:
+   Line(int x1,int y1,int x2,int y2);
+private:
+   Coordinate m_coorA;//坐标对象
+   Coordinate m_coorB;
+   //线段类只能够访问到m_coorA和m_coorB这两个对象的公有数据成员和公有成员函数。
+   //我们把线段和坐标的这种关系，称之为Has a,线段中有一个坐标，这种关系属于包含关系
+};
+
+//
+1.B类从A类派生，那么B类中含有A类的所有数据成员。
+2.B类从A类公共派生，那么可以通过B类的对象调用到A类的所有成员函数。//是错的。
+3.B类从A类公共派生，那么可以在B类中直接使用A的公共及保护限定符的数据成员。
+4.B类从A类公共派生，那么A类的私有成员函数不能被B类继承并使用。
