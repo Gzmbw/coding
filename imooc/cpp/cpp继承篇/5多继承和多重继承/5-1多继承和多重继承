@@ -1,0 +1,34 @@
+1.多重继承
+   人类
+     |
+     |
+     |
+   士兵类  ————————>多重继承
+     |
+     |
+     |
+   步兵类
+class Person
+{
+};
+class Soldier:public Person
+{
+};
+class Infantryman:public Soldier
+{
+};
+
+2.多继承
+一个派生类有多个基类；工人类       农民类
+                            农民工类
+class Worker
+{
+};
+class Farmer
+{
+};
+class MigrantWorker:public Worker,public Farmer
+{
+};
+
+
