@@ -1,0 +1,44 @@
+1.什么是隐藏？
+父类A --------->void ABC()//定义了一个成员函数
+  |
+  |
+  |
+  |
+  |
+子类B --------->void ABC()//子类B公有的继承A，定义一个同名的成员函数
+隐藏的特性：当实例化子类B的对象的时候，使用该对象只能够直接访问到子类B的ABC成员函数，而无法访问到父类的ABC()成员函数。但是B继承到了父类的ABC成员函数。
+
+关键字：父子关系   成员同名    隐藏
+class Person           class Soldier:public Person
+{                      {
+public:                public:
+   void play();            void play();
+                           void work();
+protected:             protected:
+   string m_strName;        int m_iCode;
+};                      };
+int main()
+{
+   Soldier soldier;
+   soldier.play();//这个是调用的自己的play
+   soldier.Peron::play();//通过这种方式调用父类的play
+   return 0;
+}
+
+再比如：
+class Person         class Soldier:public Person
+{                    {
+public:              public:
+   void play();           void play();
+protected:                void work();
+   string code;       protected:
+};                         int code;
+                      };
+//这里数据成员变量同名
+void Soldier::work()
+{
+   code=1234;
+   Person::code="5678";//通过这种方式来访问父类code
+}
+
+
