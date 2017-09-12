@@ -1,0 +1,4 @@
+#ifndef MIGRANTWORKER_H
+#define MIGRANTWORKER_H
+
+#endif // MIGRANTWORKER_H
