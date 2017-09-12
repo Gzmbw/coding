@@ -1,0 +1,107 @@
+1.什么是多态？
+*指相同对象收到不同消息或不同对象收到相同消息时产生不同的动作。
+2.静态多态和动态多态
+2.1静态多态（早绑定）
+class Rect
+{
+public:
+   int calcArea(int width);
+   int calcArea(int width,int height);
+   //函数重载，程序在运行之前编译之前就已经确定下来要使用哪个函数了，这种情况就叫静态多态也是早绑定
+};
+int main()
+{
+   Rect rect;
+   rect.calcArea(10);
+   rect.calcArea(10,20);
+   return 0;
+}
+
+2.2动态多态（晚绑定）
+                计算面积
+         圆形                矩形
+          |                   |
+          |                   |
+       计算面积            计算面积
+动态多态是有前提的是以继承和封装为基础的。
+class Shape
+{
+public:
+    double calcArea()
+    {
+         cout<<"calcArea"<<endl;
+         return 0;
+     }
+};
+class Circle:public Shape
+{
+public:
+    Circle(double r);
+    double calcArea();
+private:
+    double m_dR;
+};
+double Circle::calcArea()
+{
+   return 3.14*m_dR*m_dR;
+};
+class Rect:public Shape
+{
+public:
+     Rect(double width,double height);
+     double calcArea();
+private:
+     double m_dWidth;
+     double m_dHeight;
+};
+double Rect::calcArea()
+{
+    return m_dWidth*m_dHeight;
+};
+int main()
+{
+   Shape *shape1=new Circle(4.0);//使用父类的指针去指向子类的对象
+   Shape *shape2=new Rect(3.0,5.0);
+   Shape1->calcArea();
+   Shape2->calcArea();//结果不如意，只是调用了两次父类的calcArea();
+   .......
+   return 0;
+}
+
+使用virtual----->虚函数
+class Shape
+{
+public:
+   virtual double calcArea()//虚函数,把实现多态的函数定义为虚函数
+   {
+      cout<<"calcArea"<<endl;
+      return 0;
+    }
+};
+class Circle:public Shape
+{
+public:
+   Circle(double r);
+   virtual double calcArea();//在计算面积函数前把virtual加上
+private:
+   double m_dR;
+};
+class Rect:public Shape
+{
+public:
+   Rect(double width,double height);
+   virtual double calcArea();
+private:
+   double m_dWidth;
+   double m_dHeight;
+};
+int main()
+{
+   Shape *shape1=new Circle(4.0);
+   Shape *shape2=new Rect(3.0,5.0);
+   shape->calcArea();//这里调用的就是Circle()的calcArea()
+   shape->calcArea();
+   delete shape1;
+   delete shape2;
+   return 0;
+}
