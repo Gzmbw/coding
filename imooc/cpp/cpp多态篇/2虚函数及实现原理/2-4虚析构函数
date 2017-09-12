@@ -1,0 +1,92 @@
+1.例子：会产生内存泄露
+class Shape
+{
+public:
+   Shape();
+   virtual double calcArea();
+};
+class Circle:public Shape
+{
+public:
+   Circle(int x,int y,double r);
+   ~Cricle();
+   virtual double calcArea();
+private:
+   double m_dR;
+   Coordinate *m_pCenter;
+};
+Cricle::Circle(int x,int y,double r)
+{
+   m_pCenter=new Coordinate(x,y);//在构造函数中申请内存
+   m_dR=r;
+}
+Circle::~Circle()
+{
+  delete m_pCenter;
+  m_pCenter=NULL;
+}
+int main()
+{
+  Shape *shape1=new Circle(3,5,4.0);//用父类指针指向子类对象
+  shape1->calcArea();//通过父类指针操作子类的虚函数
+  //这里有问题当我们使用delete借助父类的指针去销毁子类对象，这个时候就有问题，
+  delete shape1;//如果delete后面跟的是父类指针，它只会执行父类的析构函数；如果后面跟的是子类指针，它执行子类析构函数和父类析构函数。
+  shape1 = NULL;
+  return 0;
+}
+
+2.引入虚析构函数
+使用virtual去修饰析构函数。
+class Shape
+{
+public:
+   Shape();
+   virtual double calcArea();
+   virtual ~Shape();
+};
+class Circle:public Shape
+{
+public:
+   Circle(int x,int y,double r);
+   virtual ~Circle();
+   Virtual double calcArea();
+private:
+   double m_dR;
+   Coordinate *m_pCenter;
+};
+int main()
+{
+  Shape *shape1=new Circle(3,5,4.0);
+  shape1->calcArea();
+  delete shape1;
+  shape1=NULL;
+  return 0;
+}
+
+3.virtual 在函数中的使用限制
+*普通函数不能是虚函数
+virtual int test()
+{
+}
+*静态成员函数不能是虚函数。
+class Animal
+{
+public:
+   virtual static int getCount();
+};
+*内联函数不能是虚函数
+class Animal
+{
+public:
+   inline virtual int eat()
+   {
+   }
+};
+*构造函数不能为虚函数
+class Animal
+{
+public:
+   virtual Animal()
+   {
+   }
+};
