@@ -1,0 +1,50 @@
+1.纯虚函数定义方法
+class Shape
+{
+public:
+    virtual double calcArea()       //虚函数
+    { return 0;}
+    virtual double calcPerimeter()=0;//纯虚函数:没有函数体，同时函数名后面加=0;
+    ........
+};
+
+2.抽象类：含有纯虚函数的类叫做抽象类；
+          抽象类是无法实例化对象；
+比如这是错的：
+int main()
+{
+   Shape shape;
+   Shape *s = new Shape();
+   return 0;
+}
+//以上是错的，抽象类是无法实例化对象的。
+
+2.1抽象类的子类也可以是抽象类，比如
+class Person
+{
+public:
+   Person(string name);
+   virtual void work()=0;
+   virtual void printInfo()=0;
+};
+class Worker:public Person
+{
+public:
+   Worker(string name);
+   virtual void work() = 0;//此时Worker类也是一个抽象类
+   virtual void printInfo() {cout<<m_strName;}
+private:
+   string m_strName;
+};
+//比如清洁工他继承了Worker类
+class Dustman:public Worker
+{
+public:
+   Worker(string name);
+   virtual void work(){cout<<"扫地";}//work这个函数就有明确的定义了，这个时候就可以用清洁工来实例化对象
+   virtual void printInfo(){cout<<m_strName;}
+private:
+   string m_strName;
+};
+
+//对于抽象类来说它无法实例化对象，那么抽象类的子类，只有把抽象类的所有纯虚函数都做了实现，那么这个子类就可以实例化对象。
