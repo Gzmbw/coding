@@ -1,0 +1,82 @@
+1.接口类
+如果在抽象类只含有纯虚函数而不含有其它的任何东西，那么就把它叫接口类。
+仅含有纯虚函数的类称为接口类：无数据成员，只有成员函数，在仅有的成员函数都是纯虚函数。
+1.1例子
+class Shape
+{
+public:
+   virtual double calcArea()=0;//计算面积
+   virtual double calcPerimeter()=0;//计算周长
+}；
+//这时候Shape类就是接口类。
+
+1.2接口类更多的表达一种能力或协议。
+class Flyable
+{
+public:
+   virtual void takeoff()=0;//起飞
+   virtual void land()=0;//降落
+};
+class Bird:public Flyable
+{
+public:
+   ........
+   virtual void takeoff(){....}
+   virtual void land(){....}
+private:
+   ......
+};
+void flyMatch(Flyable *a,Flyable *b)
+{
+    .....
+    a->takeOff();
+    b->takeOff();
+    a->land();
+    b->land();
+}
+
+class CanShot
+{
+public:
+  virtual void aim()=0;
+  virtual void reload()=0;
+};
+class Plane:public Flyable,public CanShot//多继承
+{
+    .......
+    virtual void takeoff(){......}
+    virtual void land(){.........}
+    virtual void aim(){.....}
+    virtual void reload(){.....}
+};
+
+void fight(CanShot *a,CanShot *b)
+{
+    .......
+    a->aim();
+    b->aim();
+    a->reload();
+    b->reload();
+}
+
+1.3例子
+class Plane:public Flyable//飞机继承Flyable,飞机就具有飞的能力
+{
+   ........
+   virtual void takeoff(){......}
+   virtual void land(){.......}
+}
+class FighterJet:public Plane,public CanShot//战斗机继承飞机和可射击，Plane是不是接口类，CanShot是接口类
+{
+    .........
+    virtual void aim(){......}
+    virtual void reload(){.....}
+}
+//如果有一个函数是空战
+void airBattle(Fighterjet *a,Fighterjet *b)
+{
+    ........
+    //调用Flyable中约定的函数
+    //调用CanShot中约定的函数
+    ........
+}
