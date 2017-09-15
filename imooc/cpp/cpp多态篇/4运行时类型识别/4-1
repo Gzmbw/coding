@@ -1,0 +1,70 @@
+#RTTI:Run-Time Type Identification
+RTTI<------>运行时类型识别
+1.typeid <---------> dynamic_cast
+
+class Flyable
+{
+public:
+   virtual void takeoff()=0;//起飞
+   virtual void land()=0;//降落
+};
+class Bird:public Flyable
+{
+public:
+   void foraging(){......}
+   virtual void takeoff(){.....}
+   virtual void land(){.....}
+private:
+   .....
+};
+class Plane:public Flyable
+{
+public:
+    void carry(){......}
+    virtual void takeoff(){......}
+    virtual void land(){......}
+};
+void doSomething(Flyable *obj)
+{
+    obj->takeoff();
+    如果是Bird,则觅食
+    如果是Plane,则运输
+    obj->land();
+}
+//要实现以上doSomething就要使用运行时类型识别
+void doSomething(Flyable *obj)
+{
+    obj->takeoff();
+    cout<<typeid(*obj).name()<<endl;;
+    if(typeid(*obj)==typeid(Bird))//对类型进行比对，当前类型是不是Bird
+    {
+         Bird *bird=dynamic_cast<Bird *>(obj);//在<>里面写上转化的目标类型，是指针或引用
+         bird->foraging();//调用觅食
+    }
+    obj->land();
+}
+
+2.总结：
+2.1 dynamic_cast注意事项：
+         *只能应用于指针和引用的转换
+         *要转换的类型中必须包含虚函数
+         *转换成功返回子类的地址，失败返回NULL
+
+2.2typeid注意事项：
+         *type_id返回一个type_info对象的引用
+         *如果想通过基类的指针获取派生类的数据类型，基类必须带有虚函数
+         *只能获取对象的实际类型
+
+
+3.
+class type_info{
+public:
+    const char *name() const;
+    bool operator==(const type_info &rhs) const;//运算符重载
+    bool operator!=(const type_info &rhs) const;
+    int bofore(const type_info &rhs) const;
+    virtual ~type_info();
+private:
+    .......
+};
+         
