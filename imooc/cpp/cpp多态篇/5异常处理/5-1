@@ -1,0 +1,88 @@
+---------异常处理--------
+1.异常：程序运行期出现的错误
+2.异常处理：对有可能发生异常的地方做出预见性的安排。
+
+3.关键字：
+    try.......catch.....
+    尝试      捕获 
+
+   throw 抛出异常
+基本思想：主逻辑与异常处理分离
+
+                               调用者
+                        函数f3()捕获并处理异常
+                     |                         | 
+       调用关系      |         ....            |      异常传播方向
+                     |                         |
+                              函数f2()
+                     |                         |
+                     |                         |
+                          函数f1() 引发异常
+
+例子：
+void fun1()
+{
+    throw 1;
+}
+int main()
+{
+   try
+   {   fun1();  }//如果能正常完成，就不会执行下面cath块
+   catch(int)    //注意()里面的int，意思是捕获int 类型的数据
+   {   ......   }
+   return 0;
+}
+//再比如：
+try              //try与catch可以是一对多的关系
+{   fun1();  }
+catch(int)
+{             }
+catch(double)
+{             }
+catch(...)      //这种写法可以捕获所有异常
+{             }
+      
+例子：
+char getChar(const string &aStr,const int aIndex)
+{
+   if(aIndex>aStr.size())
+   {
+       throw string("ivalid index!");
+   }
+   return aStr[aIndex];
+}
+string str("hello world");
+char ch;
+try{
+      ch=getChar(str,100);
+      cout<<ch<<endl;
+}
+catch(string &aval){
+     cout<<aval<<endl;
+}
+
+常见的异常：
+   数组下标越界；
+   除数为0；
+   内存不足；
+4.异常处理与多态的关系
+比如定义一个异常接口
+                  Exception
+HardwareErr   SizeErr    MemoryErr      NetworkErr
+void fun1()
+{
+    throw new SizeErr();
+}
+void fun2()
+{
+     throw new MemoryErr();
+}
+try                      try
+{                        {
+    fun1();                  fun2();
+}                        }
+catch(Exception &e)      catch(Exception &e)
+{                        {
+    e.xxx();                 e.xxx();
+}                        }
+
