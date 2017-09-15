@@ -1,0 +1,55 @@
+友元函数
+1.包含友元全局函数和友元成员函数
+2.友元全局函数 :关键字 friend
+class Coordinate
+{
+     friend void printXY(Coordinate &c);
+//通过friend定义一个友元方法：通过friend接友元函数，这个友元函数其实就是一个函数的声明，
+//声明最后要有一个;号，同时一定要传入当前这个类的对象或者一个引用或者它的指针，
+//总之得能够通过这个函数访问到这个对象当中的私有的数据成员或者是保护的数据成员，
+//这样才能够体现出友元的特性来。
+public:
+     Coordinate(int x,int y);
+private:
+     int m_iX;
+     int m_iY;
+};
+
+2.1使用方法：
+//已申明为友元
+void printXY(Coordinate &c)//传入引用或指针，效果好(速度快)，不提倡直接传入对象
+{
+    cout<<c.m_iX<<c.m_iY;   <---------------直接访问私有成员
+}
+
+int main()
+{
+   Coordinate coor(3,5); //定义一个对象
+   printXY(coor);  <----------------传入对象名而非地址
+   return 0;
+}
+
+
+3.友元成员函数
+class Coordinate
+{
+    friend void Circle::printXY(Coordinate &c);
+//定义的时候任然使用关键字，使用的函数任然叫做printXY，但是此时printXY并不是一个全局函数,
+//而是一个成员函数，它是circle类中的成员函数，一个类的成员函数申明为另一个类的友元函数；
+//声明完成后就可以象刚才那样使用。
+public:
+    Coordinate(int x,int y);
+private:
+    int m_iX;
+    int m_iY;
+};
+class Circle                       int main()
+{                                  { 
+public:                                Coordinate coor(3,5);//先实例化Coordinate一个对象
+    void printXY(Coordinate &c)        Circle circle;
+    {                                  circle.printXY(coor);
+       cout<<c.m_iX<<c.m_iY;           return 0;
+    }                               }
+};
+
+
