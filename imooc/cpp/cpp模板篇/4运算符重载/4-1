@@ -1,0 +1,129 @@
+-----------运算符重载---------
+概念：给原有运算符赋予新功能；+是两个数字相加，让它使两个字符串相加，这就赋予它新功能；
+1.例子
+int main()
+{
+   string str1("Guoo");
+   string str2("xin");
+   string str3=str1+" "+str2;//使用+号链接字符串
+   cout<<str3<<endl;//这里=,+,<<都做了重载；
+   return 0;
+}
+
+2.例子
+int main()
+{
+   Coordinate coor1(1,3);
+   Coordinate coor2(2,5);
+   Coordinate coor3(0,0);
+   coor3=coor1+coor2;
+   cout<<coor3<<endl;
+   return 0;
+}
+
+3.本质：函数重载；关键字：operator;
+4.一元运算符重载：
+4.1-(负号)的重载
+      4.1.1友元函数重载：就是在类当中定义一个友元函数，这个友元函数是全局函数，用这个友元函数来做运
+                        算符的重载，实现一个符号多了一项功能。
+      4.1.2成员函数重载:就是定义了一个类的成员函数。
+**成员函数重载
+class Coordinate
+{
+public:
+    Coordinate(int x,int y);
+    Coordinate& operator-();//对-号做成员函数的重载，在括号不需要传参数
+private:
+    int m_iX;
+    int m_iY;
+};
+//如何实现？
+Coordinate& Coordinate::operator-()//虽然不传参数，但是有隐形的指针
+{
+    m_iX=-m_iX;
+    m_iY=-m_iY;
+    return *this;
+}
+//如何使用？
+int main()
+{
+    Coordinate coor1(3,5);
+    -coor1;//相当于coor1调用operator-()这个函数，coor1.operator-();
+    return 0;
+}
+
+***友元函数的重载
+class Coordinate
+{
+friend Coordinate& operator-(Coordinate &coor);//与成员函数比较，就是括号里面要加类的对象的引用
+public:
+    Coordinate(int x,int y);
+private:
+    int m_iX;
+    int m_iY;
+};
+//如何实现？
+Coordinate& operator-(Coordinate &coor)
+{
+    coor.m_iX=-coor.m_iX;//这里也有区别
+    coor.m_iY=-coor.m_iY;
+    return *this;
+}
+//如何使用？
+int main()
+{
+    Coordinate coor1(3,5);
+    -coor1;//operator-(coor1);调用的时候封号前面是一样的，后面是不一样的
+    return 0;
+}
+4.2++符号的重载
+       4.2.1前置++符号重载
+       4.2.2后置++符号重载
+***++运算符重载----前置
+class Coordinate
+{
+public:
+    Coordinate(int x,int y);
+    Coordinate& operator++();//前置++//成员函数的重载
+private:
+    int m_iX;
+    int m_iY;
+};
+//定义的时候
+Coordinate& Coordinate::operator++()//&表示返回值是一个引用
+{
+    m_iX++;
+    m_iY++;
+    return *this;
+}
+int main()
+{
+    Coordinate coor1(3,5);
+    ++coor1;//coor1.operator++();
+    return 0;
+}
+
+***** ++运算符重载----后置
+class Coordinate
+{
+public:
+    Coordinate(int x,int y);
+    Coordinate operator++(int);//注意后置++是不一样的，没有&，所以返回值是一个Coordinate的对象
+                               //++只是表示后置，不传入任何值
+private:
+    int m_iX;
+    int m_iY;
+};
+Coordinate operator++(int)
+{
+    Coordinate old(*this);//这里是不一样的
+    m_iX++;
+    m_iY++;
+    return old;
+}
+int main()
+{
+   Coordinate coor1(3,5);
+   coor1++; //coor1.operator++(0);
+   return 0;
+}
