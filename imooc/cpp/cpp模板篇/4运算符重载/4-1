@@ -90,9 +90,10 @@ private:
     int m_iY;
 };
 //定义的时候
-Coordinate& Coordinate::operator++()//&表示返回值是一个引用
+Coordinate& Coordinate::operator++()//&表示返回值是一个引用，注意这个Coordinate::,别丢了
 {
-    m_iX++;
+    m_iX++;//不管是前置还是后置，++号在定义的时候都在后面。但是在调用使用的时候前置就写前面，
+             //后置就写后面。
     m_iY++;
     return *this;
 }
