@@ -27,7 +27,7 @@ Coordinate Coordinate::operator+(Coordinate &c)
 //+号的友元函数的重载
 Coordinate operator+(Coordinate &c1,Coordinate &c2)
 {
-    Coordinate temp(0,0);
+    Coordinate temp(0,0);//注意这里有初始值
     temp.m_iX=c1.m_iX+c2.m_iX;
     temp.m_iY=c1.m_iY+c2.m_iY;
     return temp;
