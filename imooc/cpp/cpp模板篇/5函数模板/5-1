@@ -1,0 +1,70 @@
+-------《函数模板》-------
+1.为什么要引入模板？
+例子：
+//写一个比较大小的函数时
+int max(int a,int b){return (a>b)?a:b;}//比较两个整型
+float max(float a,float b){return (a>b)?a:b;}//比较两个float型
+char max(char a,char b){return (a>b)?a:b;}//比较两个字符型
+//最好有一种方案，把类型作为参数传递进去，关键字：template typename class
+这里的class不是表示类的，而是表数据类型的。
+
+2.具体的使用方法
+template<class T>
+T max(T a,T b)    <------函数模板
+{
+    return (a>b)?a:b;
+}
+int ival=max(100,99);           <--------模板函数
+char cval = max<char>('A','B');
+
+
+//通过typename如何来定义函数的模板
+template<typename T>
+void swap(T &a,T &b)
+{
+    T tmp=a;
+    a=b;
+    b=tmp;
+}
+int x=20,y=30;
+swap<int>(x,y);
+
+3.变量作为模板参数
+template<int size>
+void display()
+{
+    cout<<size<<endl;
+}
+display<10>();
+
+4.多参数函数模板
+template <typename T,typename C>
+void display(T a,C b)
+{
+    cout<<a<<" "<<b<<endl;
+}
+   int a=1024;
+   string str="hello world!";
+   display<int,string>(a,str);
+
+**typename和class 可以混用
+template <typename T,class U>
+T minus(T *a,U b);
+//也可以这样
+template <typename T,int size>
+void display(T a)
+{
+    for(int i=0;i<size;i++)
+    cout<<a<<endl;
+}
+display<int,5>(15);
+
+5.函数模板与重载
+template <tyename T>
+void display(T a);
+
+template <typename T>
+void display(T a,T b);//函数模板参数个数不同
+
+template <typename T,int size)
+void display(T a);
