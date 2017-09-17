@@ -1,0 +1,122 @@
+-----二元运算符的重载-------
+《1.+号运算符》
+    1.1友元函数重载
+    1.2成员函数重载
+******成员函数的重载
+class Coordinate
+{
+public:
+   Coordinate(int x,int y);
+//从申明形式可以看出它是一个成员函数，注意需要传入一个参数，这个参数是const Coordinate &coor；
+   Coordinate operator+(const Coordinate &coor);
+private:
+   int m_iX;
+   int m_iY;
+};
+//如何定义？
+Coordinate operator+(const Coordinate &coor)
+{
+    Coordinate temp;
+    temp.m_iX=this->m_iX+coor.m_iX;
+    temp.m_iY=this->m_iY+coor.m_iY;
+    return temp;
+}
+int main()
+{
+   Coordinate coor1(3,5);
+   Coordinate coor2(4,7);
+   Coordinate coor3(0,0);
+   coor3=coor1+coor2;//coor1.operator+(coor2)//this是指coor1
+   return 0;
+}
+
+********友元函数的重载
+//友元函数重载相对于成员函数重载更能说明问题
+//通过friend来申明一个友元函数并且这个友元函数是Coordinate当中申明的友元函数，它的两个参数是
+//const Coordinate &c1和const Coordinate &c2,这里的const可以写也可以不写，加const不能修改值
+class Coordinate
+{
+friend Coordinate operator+(const Coordinate &c1,const Coordinate &c2);
+public:
+   Coordinate(int x,int y);
+private:
+   int m_iX;
+   int m_iY;
+};
+//怎么实现？
+Coordinate operator+(const Coordinate &c1,const Coordinate &c2)
+{
+    Coordinate temp;
+    temp.m_iX=c1.m_iX+c2.m_iX;
+    temp.m_iY=c1.m_iY+c2.m_iY;
+    return temp;
+}
+
+//在使用？
+int main()
+{
+    Coordinate coor1(3,5);
+    Coordinate coor2(4,7);
+    Coordinate coor3(0,0);
+    coor3=coor1+coor2;//operator+(coor1,coor2)
+    return 0;
+}
+
+
+《2.<<号运算符》
+*****友元函数的重载
+class Coordinate
+{
+friend ostream &operator<<(ostream &out,const Coordinate &coor);
+public:
+    Coordinate(int x,int y);
+private:
+    int m_iX;
+    int m_iY;
+};
+//实现函数的时候
+ostream &operator<<(ostream &out,const Coordinate &coor)
+{
+    out<<coor.m_iX<<","<<coor.m_iY;//这里out替代cout的位置
+    return out;//注意这里的返回值
+}
+int main()
+{
+    Coordinate coor(3,5);
+    cout<<coor;//operator<<(cout,coor);
+    return 0;
+}
+
+问题：输出运算符可以采用成员函数重载吗？
+ 不可采用成员函数重载。
+
+
+《3.[]索引运算符》
+class Coordinate
+{
+public:
+   Coordinate(int x,int y);
+   int operator[](int index);
+private:
+   int m_iX;
+   int m_iY;
+};
+//函数定义
+int Coordinate::operator[](int index)
+{
+    if(0==index)
+    {return m_iX;}
+    if(1==index)
+    {return m_iY;}
+}
+//使用
+int main()
+{
+    Coordinate coor(3,5);
+    cout<<coor[0];//coor.operator[](0);
+    cout<<coor[1];//coor.operator[](1);
+
+    return 0;
+}
+问题：索引运算符可以采用友元函数重载吗？
+不能采用友元函数重载。
