@@ -1,0 +1,54 @@
+--------《类模板》-----------
+1.在很多场合下，一个类会用到很多次，用的时候会有很多重复的地方，只有它的数据类型不同，这个时候就可以
+用到类模板；
+template<class T>
+class MyArray
+{
+public:
+    void display()//注意这个成员函数的定义写在类内定义的
+    {........}
+private:
+    T *m_pArr;
+};
+//在类外定义
+template<class T>
+void MyArray<T>::display()
+{
+   ....
+}
+//使用的时候
+int main()
+{
+    //模板类
+    MyArray<int>arr;
+    arr.display();
+    return 0;
+}
+
+2.类模板当中多个参数的使用
+template <typename T,int KSize>
+class Container
+{
+public:
+    void display();
+private:
+    T m_obj;
+};
+template <typename T,int KSize>//在类外定义一定要写上这句
+void Container<T,KSize>::display()
+{
+    for(int i=0;i<KSize;i++)
+    {
+        cout<<m_obj<<endl;
+    }
+}
+//在使用的时候
+int main()
+{
+    Container<int,10>ct1;
+    ct1.display();
+    return 0;
+}
+
+***特别提醒：模板代码不能分离编译
+
